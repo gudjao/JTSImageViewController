@@ -22,6 +22,7 @@
 @property (assign, nonatomic) CGFloat referenceCornerRadius;
 @property (copy, nonatomic) NSMutableDictionary *userInfo;
 @property (assign, nonatomic) BOOL isPixelArt;
+@property (strong, nonatomic) NSData *imageData;
 
 - (NSString *)displayableTitleAltTextSummary;
 - (NSString *)combinedTitleAndAltText;
