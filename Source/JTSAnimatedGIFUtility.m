@@ -21,7 +21,7 @@
 @implementation JTSAnimatedGIFUtility
 
 + (BOOL)imageURLIsAGIF:(NSString *)imageURL {
-    return [[imageURL substringFromIndex:[imageURL length] - 3] isEqualToString:@"gif"];
+    return [[[imageURL substringFromIndex:[imageURL length] - 3] lowercaseString] isEqualToString:@"gif"];
 }
 
 static int delayCentisecondsForImageAtIndex(CGImageSourceRef const source, size_t const i) {

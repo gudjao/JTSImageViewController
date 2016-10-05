@@ -69,10 +69,10 @@ typedef struct {
 
 @interface JTSImageViewController ()
 <
-    UIScrollViewDelegate,
-    UITextViewDelegate,
-    UIViewControllerTransitioningDelegate,
-    UIGestureRecognizerDelegate
+UIScrollViewDelegate,
+UITextViewDelegate,
+UIViewControllerTransitioningDelegate,
+UIGestureRecognizerDelegate
 >
 
 // General Info
@@ -352,12 +352,12 @@ typedef struct {
     }
     /*
      viewWillTransitionToSize:withTransitionCoordinator: is not called when rotating from
-     one landscape orientation to the other (or from one portrait orientation to another). 
-     This makes it difficult to preserve the desired behavior of JTSImageViewController. 
-     We want the background snapshot to maintain the illusion that it never rotates. The 
-     only other way to ensure that the background snapshot stays in the correct orientation 
+     one landscape orientation to the other (or from one portrait orientation to another).
+     This makes it difficult to preserve the desired behavior of JTSImageViewController.
+     We want the background snapshot to maintain the illusion that it never rotates. The
+     only other way to ensure that the background snapshot stays in the correct orientation
      is to listen for this notification and respond when we've detected a landscape-to-landscape rotation.
-    */
+     */
     UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
     BOOL landscapeToLandscape = UIDeviceOrientationIsLandscape(deviceOrientation) && UIInterfaceOrientationIsLandscape(self.lastUsedOrientation);
     BOOL portraitToPortrait = UIDeviceOrientationIsPortrait(deviceOrientation) && UIInterfaceOrientationIsPortrait(self.lastUsedOrientation);
@@ -455,6 +455,10 @@ typedef struct {
         if ([self.optionsDelegate imageViewerShouldFadeThumbnailsDuringPresentationAndDismissal:self]) {
             self.imageView.alpha = 0;
         }
+    }
+    
+    if (_imageInfo.isPixelArt) {
+        [self.imageView layer].magnificationFilter = kCAFilterNearest;
     }
     
     // We'll add the image view to either the scroll view
@@ -1758,6 +1762,9 @@ typedef struct {
     UIDynamicItemBehavior *modifier = [[UIDynamicItemBehavior alloc] initWithItems:@[self.imageView]];
     modifier.angularResistance = [self appropriateAngularResistanceForView:self.imageView];
     modifier.density = [self appropriateDensityForView:self.imageView];
+    if ([_optionsDelegate respondsToSelector:@selector(imageViewerShouldAllowRotation:)]) {
+        modifier.allowsRotation = [_optionsDelegate imageViewerShouldAllowRotation:self];
+    }
     [self.animator addBehavior:modifier];
 }
 

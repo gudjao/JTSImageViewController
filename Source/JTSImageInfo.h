@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Nice Boy LLC. All rights reserved.
 //
 
-@import Foundation;
+@import UIKit;
 
 @interface JTSImageInfo : NSObject
 
@@ -21,6 +21,7 @@
 @property (assign, nonatomic) UIViewContentMode referenceContentMode;
 @property (assign, nonatomic) CGFloat referenceCornerRadius;
 @property (copy, nonatomic) NSMutableDictionary *userInfo;
+@property (assign, nonatomic) BOOL isPixelArt;
 
 - (NSString *)displayableTitleAltTextSummary;
 - (NSString *)combinedTitleAndAltText;
